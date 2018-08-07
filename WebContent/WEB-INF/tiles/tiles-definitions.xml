@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  
+    <definition name="defaultTemplate" template="/WEB-INF/template/default/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/template/default/header.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/template/default/footer.jsp" />
+        <put-attribute name="leftCol" value="/WEB-INF/template/default/leftCol.jsp"/>
+        <put-attribute name="trackActions" value="/WEB-INF/template/components/trackActions.jsp" cascade="true"/>
+        <put-attribute name="clickOnTr" value="/WEB-INF/template/components/clickOnTr.jsp" cascade="true"/>
+        <put-attribute name="fnAlert" value="/WEB-INF/template/components/fnAlert.jsp" cascade="true"/>
+        <put-attribute name="showHideHolders" value="/WEB-INF/template/components/showHideHolders.jsp" cascade="true"/>
+        <put-attribute name="addNewCustomGroup" value="/WEB-INF/template/components/addNewCustomGroup.jsp" cascade="true"/>
+    </definition>
+
+    <definition name="defaultTemplateNoLeftSide" template="/WEB-INF/template/default/templateNoLeftSide.jsp">
+        <put-attribute name="header" value="/WEB-INF/template/default/header.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/template/default/footer.jsp" />
+        <put-attribute name="trackActions" value="/WEB-INF/template/components/trackActions.jsp" cascade="true"/>
+        <put-attribute name="clickOnTr" value="/WEB-INF/template/components/clickOnTr.jsp" cascade="true"/>
+        <put-attribute name="updatePasswordDialog" value="/WEB-INF/template/components/updatePasswordDialog.jsp" cascade="true"/>
+        <put-attribute name="addCarDialog" value="/WEB-INF/template/components/addCarDialog.jsp" cascade="true"/>
+        <put-attribute name="editCarDialog" value="/WEB-INF/template/components/editCarDialog.jsp" cascade="true"/>
+        <put-attribute name="textConfiguration" cascade="true">
+            <definition template="/WEB-INF/template/components/textConfiguration.jsp">
+                <put-attribute name="insertUpdateConfigurationDialog" value="/WEB-INF/template/components/insertUpdateConfigurationDialog.jsp" cascade="true"/>
+            </definition>
+        </put-attribute>
+    </definition>
+
+    <definition name="homeTemplate" extends="defaultTemplateNoLeftSide">
+        <put-attribute name="centerCol" value="/WEB-INF/template/default/centerCol.jsp"/>
+    </definition>
+
+    <definition name="aboutTemplate" extends="defaultTemplateNoLeftSide">
+        <put-attribute name="centerCol" value="/WEB-INF/template/default/about.jsp"/>
+    </definition>
+
+    <definition name="myTemplate" extends="defaultTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/centerCol.jsp"/>
+    </definition>
+
+    <definition name="loginTemplate" extends="defaultTemplateNoLeftSide">
+        <put-attribute name="centerCol" value="/WEB-INF/template/default/centerColLogin.jsp"/>
+    </definition>
+
+    <definition name="carsTemplate" extends="defaultTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/centerColCars.jsp"/>
+    </definition>
+
+    <!-- Tracks -->
+    <!-- public area -->
+    <definition name="publicTracksTemplate" extends="defaultTemplateNoLeftSide">
+        <put-attribute name="centerCol" value="/WEB-INF/template/default/tracks/centerColTracks.jsp"/>
+    </definition>
+
+    <definition name="publicSingleTrackTemplate" extends="publicTracksTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/default/tracks/centerColSingleTrack.jsp"/>
+    </definition>
+
+    <!-- restricted area -->
+    <definition name="tracksTemplate" extends="defaultTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/tracks/centerColTracks.jsp"/>
+        <put-attribute name="leftCol" value="/WEB-INF/template/my/leftCol.jsp"/>
+    </definition>
+
+    <definition name="recyclebinTemplate" extends="defaultTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/centerColRecyclebin.jsp"/>
+        <put-attribute name="leftCol" value="/WEB-INF/template/my/leftCol.jsp"/>
+    </definition>
+
+    <definition name="singleTrackTemplate" extends="tracksTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/tracks/centerColSingleTrack.jsp"/>
+    </definition>
+
+    <definition name="uploadTrackTemplate" extends="tracksTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/tracks/centerColUploadTrack.jsp"/>
+    </definition>
+
+    <definition name="backlogTemplate" extends="tracksTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/tracks/centerColBacklog.jsp"/>
+    </definition>
+
+    <definition name="privateGroupsTemplate" extends="tracksTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/groups/centerColGroups.jsp"/>
+    </definition>
+
+    <!-- Settings -->
+    <definition name="settingsTemplate" extends="defaultTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/centerColSettings.jsp"/>
+        <put-attribute name="leftCol" value="/WEB-INF/template/my/leftColSettings.jsp"/>
+    </definition>
+
+    <!-- Account -->
+    <definition name="accountTemplate" extends="defaultTemplateNoLeftSide">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/account/centerColAccount.jsp"/>
+    </definition>
+
+    <definition name="editAccountTemplate" extends="defaultTemplateNoLeftSide">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/account/centerColEditAccount.jsp"/>
+    </definition>
+
+    <!-- Service Data -->
+    <definition name="serviceTemplate" extends="defaultTemplateNoLeftSide">
+        <put-attribute name="centerCol" value="/WEB-INF/template/service/centerColService.jsp"/>
+    </definition>
+
+</tiles-definitions>

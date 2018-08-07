@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:task="http://www.springframework.org/schema/task"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context-4.3.xsd
+                            http://www.springframework.org/schema/mvc
+                            http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+                            http://www.springframework.org/schema/task
+                            http://www.springframework.org/schema/task/spring-task-4.3.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+                            http://www.springframework.org/schema/tx
+                            http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+                            http://www.springframework.org/schema/util
+                            http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+    <import resource="classpath*:coreApplicationContext.xml"/>
+    <context:component-scan base-package="com.ya0ne" />
+    <tx:annotation-driven/>
+
+    <!-- AOP beans -->
+    <bean id="uploadToDefaultAspect" class="com.ya0ne.web.aop.UploadToDefaultAspect"/>
+    <bean id="carInCloudAspect" class="com.ya0ne.web.aop.CarInCloudAspect"/>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
+    <util:properties id="propertyConfigurer" location="classpath:common.properties,classpath*:edrive.properties,classpath*:job.properties,classpath*:log4j.web.properties"/>
+    <context:property-placeholder properties-ref="propertyConfigurer" />
+
+    <bean id="languages" class="com.ya0ne.core.factories.LanguageFactory" init-method="init" scope="singleton"/>
+    <bean id="parameters" class="com.ya0ne.core.factories.ParameterFactory" init-method="init" scope="singleton"/>
+    <bean id="configurationFactory" class="com.ya0ne.core.factories.ConfigurationFactory" init-method="init" scope="singleton"/>
+    <bean id="countryFactory" class="com.ya0ne.core.factories.CountryFactory" init-method="init" scope="singleton"/>
+    <bean id="localTimeZoneFactory" class="com.ya0ne.core.factories.LocalTimeZoneFactory" init-method="init"/>
+    <bean id="carFactory" class="com.ya0ne.core.factories.CarFactory" init-method="init"/>
+    <bean id="entityFactory" class="com.ya0ne.core.factories.EntityFactory" init-method="init"/>
+    <bean id="timeZoneFactory" class="com.ya0ne.core.factories.TimeZoneFactory" init-method="init"/>
+
+    <!-- bean id="accountService" class="com.ya0ne.core.domain.service.AccountService"/ -->
+
+    <task:annotation-driven executor="taskExecutor"/>
+    <task:executor id="taskExecutor" pool-size="10"/>
+
+    <bean id="appCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation">
+            <value>/WEB-INF/ehcache.xml</value>
+        </property> 
+        <property name="shared">
+            <value>true</value>
+        </property>
+    </bean>
+</beans>
