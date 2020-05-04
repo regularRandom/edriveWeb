@@ -87,6 +87,11 @@
         <put-attribute name="centerCol" value="/WEB-INF/template/my/groups/centerColGroups.jsp"/>
     </definition>
 
+    <definition name="archivedTracksTemplate" extends="defaultTemplate">
+        <put-attribute name="centerCol" value="/WEB-INF/template/my/tracks/centerColArchivedTracks.jsp"/>
+        <put-attribute name="leftCol" value="/WEB-INF/template/my/leftCol.jsp"/>
+    </definition>
+
     <!-- Settings -->
     <definition name="settingsTemplate" extends="defaultTemplate">
         <put-attribute name="centerCol" value="/WEB-INF/template/my/centerColSettings.jsp"/>

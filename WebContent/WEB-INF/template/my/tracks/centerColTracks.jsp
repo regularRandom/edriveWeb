@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/include.jsp" %>
 <%@ include file="/WEB-INF/views/datatables.jsp" %>
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
 <script src="<c:url value="/resources/js/moment-with-locales.js"/>"></script>
 
 <script type="text/javascript">
@@ -28,6 +28,7 @@ strings['TEXT_GROUP_NAME_CANNOT_BE_EMPTY'] = "<spring:message code='TEXT_GROUP_N
 strings['TEXT_TRACK_PEDESTRIAN'] = "<spring:message code='TEXT_TRACK_PEDESTRIAN'/>";
 strings['TEXT_TRACK_BICYCLE'] = "<spring:message code='TEXT_TRACK_BICYCLE'/>";
 strings['TEXT_MERGE_TRACKS_CONFIRMATION'] = "<spring:message code='TEXT_MERGE_TRACKS_CONFIRMATION'/>";
+strings['TEXT_ARCHIVED_TRACKS'] = "<spring:message code='TEXT_ARCHIVED_TRACKS'/>";
 </compress:js>
 </script>
 
@@ -47,7 +48,6 @@ strings['TEXT_MERGE_TRACKS_CONFIRMATION'] = "<spring:message code='TEXT_MERGE_TR
     <div id="buttons">
         <input type="button" id="submitMerge" value="<spring:message code="TEXT_MERGE_TRACKS"/>"/>&nbsp;
         <input type="button" id="submitArchive" value="<spring:message code="TEXT_ARCHIVE_TRACKS"/>"/>&nbsp;
-        <input type="button" id="submitExtract" value="<spring:message code="TEXT_EXTRACT_TRACKS"/>"/>&nbsp;
         <input type="button" id="submitDelete" value="<spring:message code="TEXT_DELETE_TRACKS"/>"/>&nbsp;
         <select id="customGroupSelect"><option value=0><spring:message code='TEXT_ADD_TO_NEW_OR_EXISTING_GROUP'/></option></select>&nbsp;<input type="button" id="submitAddToCustomGroup" value="<spring:message code="TEXT_ADD_TO_CUSTOM_GROUP"/>"/>&nbsp;
     </div>

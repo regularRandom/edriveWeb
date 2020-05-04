@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/include.jsp" %>
 <%@ include file="/WEB-INF/views/datatables.jsp" %>
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
 <link href="<c:url value="/resources/jquery/jquery-ui-custom/jquery-ui.min.css"/>" rel="stylesheet" type="text/css"/>
 <script src="<c:url value="/resources/jquery/jquery-ui-custom/jquery-ui.min.js"/>"></script>
 

@@ -10,6 +10,7 @@ import static com.ya0ne.core.constants.WebConstants.WEB_UPLOAD_ERROR;
 import static com.ya0ne.core.constants.WebConstants.WEB_UPLOAD_OK;
 import static com.ya0ne.core.constants.WebConstants.WEB_WEBDAV_ERROR;
 import static com.ya0ne.core.domain.converters.TrackConverter.toTracksListDto;
+import static com.ya0ne.core.domain.converters.TrackConverter.toArchivedTracksListDto;
 import static com.ya0ne.core.domain.converters.TrackDataConverter.toTrackPointDtos;
 import static com.ya0ne.core.utilities.CommonUtilities.toIds;
 
@@ -39,6 +40,7 @@ import com.github.sardine.SardineFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ya0ne.core.domain.BacklogRecord;
+import com.ya0ne.core.domain.Language;
 import com.ya0ne.core.domain.Parameter;
 import com.ya0ne.core.domain.car.MyCar;
 import com.ya0ne.core.domain.dao.TrackDAO;
@@ -98,15 +100,24 @@ public class TrackServiceImpl implements TrackService {
     @Autowired private CommonProperties commonProperties;
 
     @Override
-    public ModelAndView getTracks( Locale locale ) {
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("parameters",domainUtilities.getAccount().getParameters().get(languages.getLanguage(locale.getLanguage())));
+    public ModelAndView getTracks( Locale locale, String path ) {
+        ModelAndView mv = new ModelAndView(path);
+        Language language = languages.getLanguage(locale.getLanguage());
+        mv.addObject("parameters",domainUtilities.getAccount().getParameters().get(language));
         return mv;
     }
 
     @Override
     public String getTracksList() {
-        List<TracksListDto> list = toTracksListDto(trackDao.getTracksForCustomer(domainUtilities.getCustomerId(),commonProperties.getThresholdToMerge()));
+        List<TracksListDto> list = toTracksListDto(trackDao.getTracksForCustomer(domainUtilities.getCustomerId(),
+                                                                                 commonProperties.getThresholdToMerge()));
+        return gson.toJson(list);
+    }
+
+    @Override
+    public String getArchivedTracksList() {
+        List<TracksListDto> list = toArchivedTracksListDto(trackDao.getArchivedTracksForCustomer(domainUtilities.getCustomerId(),
+                                                                                                 commonProperties.getThresholdToMerge()));
         return gson.toJson(list);
     }
 
@@ -115,15 +126,16 @@ public class TrackServiceImpl implements TrackService {
         ModelAndView mv = new ModelAndView();
         Track track = null;
         Map<String, Parameter> parametersMap = null;
+        Language language = languages.getLanguage(locale.getLanguage());
 
         if( request.getServletPath().startsWith(WEB_TRACKS) ) {
             mv.setViewName(WEB_TRACKS + "/singleTrack");
             track = trackDao.getTrack(trackId);
-            parametersMap = parameters.getParameters().get(languages.getLanguage(locale.getLanguage()));
+            parametersMap = parameters.getParameters().get(language);
         } else {
             mv = new ModelAndView(WEB_MY + "/singleTrack");
             track = trackDao.getTrack(trackId,domainUtilities.getCustomerId());
-            parametersMap = domainUtilities.getAccount().getParameters().get(languages.getLanguage(locale.getLanguage()));
+            parametersMap = domainUtilities.getAccount().getParameters().get(language);
         }
 
         mv.addObject("track",track);
@@ -147,9 +159,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public ModelAndView mergeTracksView( Locale locale ) {
-        ModelAndView mv = new ModelAndView("my/mergeTracks");
-        mv.addObject("parameters",domainUtilities.getAccount().getParameters().get(languages.getLanguage(locale.getLanguage())));
-        return mv;
+        return getTracks(locale, "my/mergeTracks");
     }
 
     @Override
@@ -216,7 +226,7 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public ModelAndView getPublicTracks(Locale locale) {
+    public ModelAndView getPublicTracks( Locale locale, String path ) {
         ModelAndView mv = new ModelAndView();
         mv.addObject("parameters",parameters.getParameters().get(languages.getLanguage(locale.getLanguage())));
         return mv;
@@ -401,5 +411,10 @@ public class TrackServiceImpl implements TrackService {
             return 0;
         }
         return trackDao.deleteTracks(toIds(dtos));
+    }
+
+    @Override
+    public ModelAndView getArchivedTracks(Locale locale) {
+        return getTracks(locale, "my/archived");
     }
 }

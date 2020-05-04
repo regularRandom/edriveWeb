@@ -16,7 +16,14 @@ public interface TrackService {
      * @param locale
      * @return
      */
-    ModelAndView getTracks( Locale locale );
+    ModelAndView getTracks( Locale locale, String path );
+    
+    /**
+     * Fetches all archived tracks of customers and shows them in a grid
+     * @param locale
+     * @return
+     */
+    ModelAndView getArchivedTracks( Locale locale );
     
     /**
      * Another one method to get tracks list
@@ -99,7 +106,7 @@ public interface TrackService {
      * @param locale
      * @return
      */
-    ModelAndView getPublicTracks( Locale locale );
+    ModelAndView getPublicTracks( Locale locale, String path );
 
     /**
      * Another one method to get all public tracks list
@@ -184,4 +191,10 @@ public interface TrackService {
      * @throws TrackErrorException
      */
     //long getTrack( long carId, Date date, String loadType ) throws TrackErrorException;
+    
+    /**
+     * Method to get archived tracks list
+     * @return JSON string
+     */
+    String getArchivedTracksList();
 }

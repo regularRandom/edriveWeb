@@ -14,8 +14,10 @@
         <li class="first"><a href="<c:url value="/my/tracks/uploadTrack"/>"><spring:message code="TEXT_UPLOAD_NEW_TRACK"/></a></li>
         <li><a href="<c:url value="/my/tracks/checkBacklog"/>"><spring:message code="TEXT_CHECK_BACKLOG"/></a></li>
         <li><a href="<c:url value="/my/groups"/>"><spring:message code="TEXT_GROUP_MANAGER"/></a></li>
-        <li><a href="<c:url value="/my/tracks/planVoyage"/>"><spring:message code="TEXT_PLAN_NEW_TRACK"/></a></li>
+        <li><a href="<c:url value="/my/tracks/archived"/>"><spring:message code="TEXT_ARCHIVED_TRACKS"/></a></li>
         <li><a href="<c:url value="/my/recyclebin"/>"><spring:message code="TEXT_RECYCLEBIN"/></a></li>
+        <li>...</li>
+        <li><a href="<c:url value="/my/tracks/planVoyage"/>"><spring:message code="TEXT_PLAN_NEW_TRACK"/></a></li>
       </ul>
         </div>
         </td>
