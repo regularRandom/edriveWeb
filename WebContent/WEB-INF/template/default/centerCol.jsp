@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/include.jsp" %>
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
 <script type="text/javascript">
 <compress:js enabled="${compressOnOff}" jsCompressor="closure">
     var strings = new Array();
@@ -10,8 +10,14 @@
     strings['TEXT_OSRM_ROUTE_NOT_FOUND_ERROR'] = '<spring:message code="TEXT_OSRM_ROUTE_NOT_FOUND_ERROR"/>';
 </compress:js>
 </script>
+
+<c:choose>
+    <c:when test="${configuration.get('OSRM_DASHBOARD_ENABLED') == 1}">
 <script src="<c:url value="/resources/js/route/global.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/resources/js/route/functions.js"/>" type="text/javascript"></script>
+    </c:when>
+</c:choose>
+
 <style>
 <compress:css enabled="${compressOnOff}">
   .ui-autocomplete-loading {

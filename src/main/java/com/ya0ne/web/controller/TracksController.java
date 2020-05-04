@@ -24,9 +24,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,18 +54,17 @@ public class TracksController {
      * @param locale
      * @return ModelAndView
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ModelAndView showTracks( Locale locale ) {
-        return trackService.getTracks( locale );
+        return trackService.getTracks( locale, WEB_MYTRACKS );
     }
 
     /**
      * returns JSON representation of list of tracks
      * @return JSON string
      */
-    @RequestMapping(value="/getTracksList", 
-                    method = RequestMethod.POST, 
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/getTracksList", 
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody String getTracksList() {
         return trackService.getTracksList();
     }
@@ -76,7 +76,7 @@ public class TracksController {
      * @param request
      * @return ModelAndView
      */
-    @RequestMapping(value="/show/{id}", method = RequestMethod.GET)
+    @GetMapping(value="/show/{id}")
     public ModelAndView showTrack( @PathVariable("id") Long id, Locale locale, HttpServletRequest request ) {
         return trackService.showTrack( id, locale, request );
     }
@@ -86,9 +86,8 @@ public class TracksController {
      * @param id
      * @return JSON string
      */
-    @RequestMapping(value="/populateTrack/{id}", 
-    				method = RequestMethod.POST, 
-    				produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/populateTrack/{id}", 
+  				 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody String populateTrack( @PathVariable("id") Long id, HttpServletRequest request ) {
         return trackService.prepareTrackMap( id, request );
     }
@@ -98,8 +97,7 @@ public class TracksController {
      * @param locale
      * @return ModelAndView
      */
-    @RequestMapping(value="/mergeTracks", 
-                    method = RequestMethod.GET)
+    @GetMapping(value="/mergeTracks")
     public ModelAndView mergeTracks( Locale locale ) {
         return trackService.mergeTracksView( locale );
     }
@@ -109,9 +107,8 @@ public class TracksController {
      * @param trackIds
      * @return
      */
-    @RequestMapping(value="/merge", 
-    				method = RequestMethod.POST,
-    				produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/merge",
+    			 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> merge( @RequestParam(value = "dataIds", required = true ) String dataIds ) {
     	logger.info("TracksController: merge, " + dataIds);
     	Long trackId = trackService.mergeTracks( dataIds );
@@ -127,8 +124,7 @@ public class TracksController {
      * @return ModelAndView
      */
     // TODO: several types of errors
-    @RequestMapping(value="/uploadTrack",
-                    method = RequestMethod.GET)
+    @GetMapping(value="/uploadTrack")
     public ModelAndView uploadTrackView(@RequestParam(value = "uploadError", required = false) String uploadError,
     									Locale locale) {
     	ModelAndView mv = new ModelAndView();
@@ -145,8 +141,7 @@ public class TracksController {
      * @param locale
      * @return
      */
-    @RequestMapping(value="/uploadTrackFile",
-                    method = RequestMethod.POST)
+    @PostMapping(value="/uploadTrackFile")
     @ResponseBody
     public ModelAndView uploadTrackFile( @RequestParam("backlogFile") MultipartFile backlogFile,
     									                 @RequestParam("carId") long carId,
@@ -172,9 +167,8 @@ public class TracksController {
      * @param value true/false
      * @return OK or null
      */
-    @RequestMapping(value="/update", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/update",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> update( @RequestParam(value = "trackId", required = true ) long trackId,
 		   											    @RequestParam(value = "field", required = true ) String field,
 		   											    @RequestParam(value = "value", required = true ) boolean value ) {
@@ -192,9 +186,8 @@ public class TracksController {
      * @param description
      * @return OK or null
      */
-    @RequestMapping(value="/updateDescription", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/updateDescription",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> update( @RequestParam(value = "trackId", required = true ) long trackId,
 		   											    @RequestParam(value = "description", required = true ) String description ) {
         logger.info("TracksController: update, " + trackId + ", description = " + description );
@@ -210,7 +203,7 @@ public class TracksController {
      * @param locale
      * @return ModelAndView
      */
-    @RequestMapping(value="/checkBacklog", method = RequestMethod.GET)
+    @GetMapping(value="/checkBacklog")
     public ModelAndView checkBacklog( Locale locale ) {
         return trackService.checkBacklog( locale );
     }
@@ -219,9 +212,8 @@ public class TracksController {
      * returns JSON representation of list of backlog files
      * @return JSON string
      */
-    @RequestMapping(value="/getBacklog", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/getBacklog",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody String getBacklog() {
         return trackService.getBacklog();
     }
@@ -230,9 +222,8 @@ public class TracksController {
      * returns JSON representation of list of backlog files
      * @return JSON string
      */
-    @RequestMapping(value="/loadBacklog", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/loadBacklog",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> loadBacklog( @RequestParam(value = "backlog", required = true ) String backlog ) {
 	    if( trackService.loadBacklog(backlog).equals(WEB_UPLOAD_OK) ) {
 		    return new ResponseEntity<String>(gson.toJson(OK), HttpStatus.OK);
@@ -244,9 +235,8 @@ public class TracksController {
     /**
      * deletes all backlog tracks
      */
-    @RequestMapping(value="/clearBacklog", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/clearBacklog",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> clearBacklog( @RequestParam( value = "deleteId", required = false ) String deleteId ) {
         if( trackService.clearBacklog( deleteId ) > 0 ) {
             return new ResponseEntity<String>(gson.toJson(OK),HttpStatus.OK);
@@ -258,9 +248,8 @@ public class TracksController {
     /**
      * recalculates track
      */
-    @RequestMapping(value="/recalcTrack", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/recalcTrack",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> recalcTrack( @RequestParam( value = "trackId", required = true ) long trackId ) {
         if( trackService.recalcTrack( trackId ) != 0 ) {
             return new ResponseEntity<String>(gson.toJson(OK),HttpStatus.OK);
@@ -269,8 +258,7 @@ public class TracksController {
         }
     }
 
-    @RequestMapping(value = "/exportGpx/{trackId}",
-                    method = RequestMethod.GET)
+    @GetMapping(value = "/exportGpx/{trackId}")
     public void exportGpx( @PathVariable("trackId") long trackId,
                            HttpServletResponse response ) throws IOException {
         response.setContentType("application/gpx");
@@ -283,10 +271,9 @@ public class TracksController {
         is.close();
     }
 
-    @RequestMapping(value = "/exportNmea/{trackId}",
-                    method = RequestMethod.GET)
+    @GetMapping(value = "/exportNmea/{trackId}")
     public void exportNmea( @PathVariable("trackId") long trackId,
-                           HttpServletResponse response ) throws IOException {
+                            HttpServletResponse response ) throws IOException {
         response.setContentType("application/nmea");
         InputStream is = new ByteArrayInputStream(trackService.exportNmea(trackId));
         response.setHeader( "Content-Disposition", "attachment; filename=" + trackService.getTrackDate() + "." + fileNmea );
@@ -302,9 +289,8 @@ public class TracksController {
      * @param trackPointId
      * @return OK
      */
-    @RequestMapping(value="/deleteTrackPoints", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/deleteTrackPoints",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> deleteTrackPoints( @RequestParam(value = "dataIds", required = true ) String dataIds ) {
         logger.info("TracksController: deleteTrackPoints, " + StringUtils.split(dataIds, ','));
         if( trackService.deleteTrackPoints( dataIds ) > 0 ) {
@@ -319,9 +305,8 @@ public class TracksController {
      * @param trackPointId
      * @return OK
      */
-    @RequestMapping(value="/archive", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/archive",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> archive( @RequestParam(value = "dataIds", required = true) String dataIds ) {
         logger.info("TracksController: archive, " + dataIds);
         try {
@@ -337,9 +322,8 @@ public class TracksController {
      * @param trackPointId
      * @return OK
      */
-    @RequestMapping(value="/extract", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/extract",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> extract( @RequestParam(value = "dataIds", required = true) String dataIds ) {
         logger.info("TracksController: extract, " + dataIds);
         try {
@@ -355,9 +339,8 @@ public class TracksController {
      * @param trackPointId
      * @return OK
      */
-    @RequestMapping(value="/deleteTracks", 
-                    method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value="/deleteTracks",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity<String> delete( @RequestParam(value = "dataIds", required = true) String dataIds ) {
         logger.info("TracksController: deleteTracks, " + dataIds);
         try {
@@ -366,5 +349,25 @@ public class TracksController {
         } catch( Exception e ) {
             return new ResponseEntity<String>(gson.toJson(WEB_EMPTY_TRACK_LIST),HttpStatus.NO_CONTENT);
         }
+    }
+
+    /**
+     * returns JSON representation of list of tracks
+     * @return JSON string
+     */
+    @PostMapping(value="/archived/list",
+                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody String getArchivedTracksList() {
+        return trackService.getArchivedTracksList();
+    }
+
+    /**
+     * Method returns a view with tracks ready for merge
+     * @param locale
+     * @return ModelAndView
+     */
+    @GetMapping(value="/archived")
+    public ModelAndView getArchivedTracks( Locale locale ) {
+        return trackService.getArchivedTracks( locale );
     }
 }

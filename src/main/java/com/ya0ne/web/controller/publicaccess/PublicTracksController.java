@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ya0ne.web.service.TrackService;
 
 @Controller
-@RequestMapping(value=WEB_TRACKS)
+@RequestMapping(value = WEB_TRACKS)
 public class PublicTracksController {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(PublicTracksController.class);
@@ -29,7 +29,7 @@ public class PublicTracksController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showTracks( Locale locale ) {
-        return trackService.getPublicTracks( locale );
+        return trackService.getPublicTracks( locale, WEB_TRACKS );
     }
 
     @RequestMapping(value="/getPublicTracksList", 

@@ -28,16 +28,12 @@ $(document).ready(function() {
                 aTargets: [0],    // Column number which needs to be modified
                 mRender: function( data, type, full ) {   // row, data contains the object and value for the column
                     var readOnly = full.readOnly || full.status == "LOCKED" ? " disabled readonly" : "";
-                    var toMerge = full.toMerge != null ? '<img src="@webContext@/resources/images/Arrow-Merge-icon.png" border="0" title="' +
-                                                                    full.toMerge +
-                                                              '" alt="' +
-                                                                    full.toMerge +
-                                                              '" style="cursor: pointer; cursor: hand;" data-merge-id="' +
-                                                                    full.toMerge +
-                                                              '" class="toMerge" data-original-id="' +
-                                                                    full.id +
-                                                              '"/>' : '';
-                    return '<input type="checkbox" id="entityId['+data+']" name="entityId[]" value="'+data+'" ' + readOnly + '/>&nbsp;' + toMerge;
+                    var toMerge = full.toMerge != null ? '+' + full.toMerge : '';
+                    return '<input type="checkbox" id="entityId['+data+']" name="entityId[]" value="'+data+'" ' + readOnly + '/><br/><a href="#" class="toMerge" data-original-id="' +
+                        full.id +
+                        '" style="cursor: pointer; cursor: hand; font-size: 8pt" data-merge-id="' +
+                        full.toMerge +
+                        '">&nbsp;' + toMerge + '</a>';
                 }
             },
             {
@@ -62,7 +58,7 @@ $(document).ready(function() {
         ],
         "aoColumns": [
             { "title": "#", "class": "dt-body-center", "mData" : "id", "orderable" : false },
-            { "title": strings['TEXT_TRACK_NAME'], "class": "dt-body-center", "data" : "name", "orderable" : false, "mData" :  function ( source, type, val ) { return (source.starred ? "*" : "") + source.name + "," + source.description + "," + source.groupName; } },
+            { "title": strings['TEXT_TRACK_NAME'], "class": "dt-body-center", "data" : "name", "orderable" : false, "mData" :  function ( source, type, val ) { return (source.starred ? "*" : "") + source.name + "," + source.description + "," + source.groupName + "," + (source.toMerge != null ? "merge" : ""); } },
             { "title": strings['TEXT_TRACK_DATE'], "class": "dt-body-center", "orderable" : true },
             { "title": strings['TEXT_TRACK_DISTANCE'] + ", " + strings['MILEAGE_UNIT'], "class": "dt-body-center", "data" : "distance", "orderable" : true },
             { "title": strings['TEXT_AVG_SPEED']  + ", " + strings['UNIT_OF_SPEED'], "class": "dt-body-center", "data" : "speed", "orderable" : true },
@@ -114,7 +110,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).on('click', 'img.toMerge', function() {
+    $(document).on('click', 'a.toMerge', function() {
         var data = new Array();
         var button = $('#submitMerge');
         var text = strings['TEXT_MERGE_TRACKS_CONFIRMATION'];
