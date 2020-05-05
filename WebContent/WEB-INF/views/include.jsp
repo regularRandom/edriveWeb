@@ -10,4 +10,6 @@
 <c:set var="compressOnOff" scope="application">
     <spring:eval expression="@propertyConfigurer.getProperty('code.compress')"/>
 </c:set>
-
+<c:set var="googleApiKey" scope="application">
+    <spring:eval expression="@propertyConfigurer.getProperty('googleApiKey')"/>
+</c:set>

@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/include.jsp" %>
 
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&key=${googleApiKey}"></script>
 <script type="text/javascript">
 <compress:js enabled="${compressOnOff}" jsCompressor="closure">
     var strings = new Array();

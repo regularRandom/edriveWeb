@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/include.jsp" %>
 <%@ include file="/WEB-INF/views/datatables.jsp" %>
 
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyAKZsOo-t9RwHP3O8p5BRElyHCWVxKYk0k"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=${googleApiKey}"></script>
 <script src="<c:url value="/resources/js/moment-with-locales.js"/>"></script>
 
 <script type="text/javascript">
